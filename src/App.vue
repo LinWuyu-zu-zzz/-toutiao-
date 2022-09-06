@@ -1,21 +1,26 @@
 <template>
-  <div>黑马头条</div>
+  <div>
+    黑马头条
+    <van-button type="primary">主要按钮</van-button>
+    <van-button type="info">信息按钮</van-button>
+    <van-button type="default">默认按钮</van-button>
+    <van-button type="warning">警告按钮</van-button>
+    <van-button type="danger">危险按钮</van-button>
+    <div class="box"></div>
+  </div>
 </template>
 
 <script>
-// git log 查看commit记录
-// git status 查看当前仓库的状态
-// git add .  提交到暂存区
-// git commit -m ''   格式如下:
-//   - feat: 新增特性
-//   - style: 样式的修改
-//   - fixed: debug,修改了bug
-//   - comment: 添加了注释
-export default {
-
-}
+// 1.git提交  2.导入字体图标fonts
+// 3.rem适配: 3.1 下载包amfe-flexible,引入amfe-flexible
+//            3.2 下载post-css(预处理器), 新建.postcssrc.js文件并配置
+export default {}
 </script>
 
-<style>
-
+<style scoped>
+.box {
+  width: 2rem;
+  height: 2rem;
+  background-color: gold;
+}
 </style>
