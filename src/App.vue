@@ -7,7 +7,7 @@
 // git status 查看当前仓库的状态
 // git add .  提交到暂存区
 // git commit -m ''   格式如下:
-//   - feat: 新增的特性
+//   - feat: 新增特性
 //   - style: 样式的修改
 //   - fixed: debug,修改了bug
 //   - comment: 添加了注释
