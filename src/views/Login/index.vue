@@ -14,6 +14,7 @@
         name="mobile"
         placeholder="请输入手机号"
         :rules="mobileRules"
+        label-width="8rem"
       >
         <template #label>
           <span class="toutiao toutiao-shouji"></span>
@@ -81,7 +82,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['SET_TOKEN']),
+    ...mapMutations(['SET_TOKEN']), // 运用vuex,兄弟组件通信
     async onSubmit(values) {
       // submit事件通过之后才会触发打印
       this.loading()
