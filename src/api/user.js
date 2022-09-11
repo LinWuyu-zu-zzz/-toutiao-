@@ -37,7 +37,7 @@ export const sendCodeAPI = (mobile) => {
 export const getUserInfoAPI = () => {
   return request({
     url: '/v1_0/user'
-    // headers: {
+    // headers: { // 已经被单独抽取出去了
     //   Authorization: `Bearer ${store.state.tokenObj.token}`
     // }
   })

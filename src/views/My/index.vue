@@ -134,7 +134,7 @@ export default {
         this.userInfo = data.data // 把请求回来的数据对象渲染出来
       } catch (error) {
         // error分为js错误和axios错误
-        // 文档中,401是给用户提示,用户认证失败,需要重新登录
+        // 文档中,401是给用户提示,用户认证失败,需要重新登录,2小时就过期了
         // 400和507给程序员提示
         if (error.response && error.response.status === 401) {
           this.$toast.fail('用户认证失败,请重新登录') // 给用户提示
