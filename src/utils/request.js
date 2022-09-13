@@ -10,7 +10,7 @@ const request = axios.create({
   baseURL: 'http://toutiao.itheima.net'
 })
 
-// 添加请求拦截器,将Authorization抽取出来,很多请求都写,太冗余
+// 添加请求拦截器,将传参的Authorization抽取出来,很多请求都写,太冗余
 request.interceptors.request.use(
   function (config) {
     // 在发送请求之前做些什么

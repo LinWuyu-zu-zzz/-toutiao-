@@ -14,20 +14,39 @@
         <article-list :id="item.id"></article-list>
       </van-tab>
 
-      <span class="toutiao toutiao-gengduo"></span>
+      <span class="toutiao toutiao-gengduo" @click="isShow = true"></span>
     </van-tabs>
+
+    <!-- 弹出层 -->
+    <van-popup
+      v-model="isShow"
+      closeable
+      close-icon-position="top-left"
+      position="bottom"
+      :style="{ height: '100%' }"
+    >
+      <!-- 弹窗频道组件 -->
+      <!-- 自定义事件：让父组件传过来index, -->
+      <more-edit
+        @change-active=";[(isShow = false), (active = $event)]"
+        :myChannels="channels"
+      ></more-edit>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { getChannelAPI } from '@/api'
 import ArticleList from './components/ArticleList.vue'
+import MoreEdit from './components/MoreEdit'
+
 export default {
-  components: { ArticleList },
+  components: { ArticleList, MoreEdit },
   data() {
     return {
-      active: 2, // 高亮,下标索引
-      channels: []
+      active: 0, // 高亮,下标索引
+      channels: [],
+      isShow: false
     }
   },
   created() {

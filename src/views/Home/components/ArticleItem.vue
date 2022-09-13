@@ -14,6 +14,7 @@
       :title="article.title"
       :label="label"
     >
+      <!-- 默认插槽,直接写 -->
       <van-image width="100" height="100" :src="article.cover.images[0]" />
     </van-cell>
     <!-- 三张图片的结构 -->
@@ -22,6 +23,7 @@
       :title="article.title"
       :label="label"
     >
+      <!-- label插槽,直接写 -->
       <template #label>
         <van-image
           v-for="(item, index) in article.cover.images"
@@ -38,6 +40,7 @@
 </template>
 
 <script>
+import dayjs from '@/utils/dayjs'
 export default {
   props: {
     article: {
@@ -49,7 +52,7 @@ export default {
     label() {
       /* eslint-disable */
       const { aut_name, comm_count, pubdate } = this.article
-      return `${aut_name} ${comm_count}评论  ${pubdate}`
+      return `${aut_name} ${comm_count}评论  ${dayjs(pubdate).fromNow()}`
     }
   }
 }
