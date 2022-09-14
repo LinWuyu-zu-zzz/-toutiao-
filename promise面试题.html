@@ -25,6 +25,8 @@
         //   - eventBus 全局事件总线
         //   - promise 异步的时候
         // 9.promise除了链式调用以外,一直.then, 还可以多次调用
+        // 10. Promise的链式调用
+        // 11.then方法出错，在下一个then中能够拿到错误的原因
         const PENDING = 'pending'
         const FULFILLED = 'fulfilled'
         const REJECTED = 'rejected'
@@ -67,41 +69,56 @@
             }
             // class类新增方法:
             then(onFulfilled, onRejected) {
-                if (this.status === FULFILLED) {
-                    onFulfilled(this.value)
-                }
+                const p2 = new Promise((resolve, reject) => {
+                    if (this.status === FULFILLED) {
+                        try {
+                            onFulfilled(this.value)
+                        } catch (error) {
+                            reject(error)
+                        }
+                    }
 
-                if (this.status === REJECTED) {
-                    onRejected(this.reason)
-                }
+                    if (this.status === REJECTED) {
+                        try {
+                            onRejected(this.reason)
+                        } catch (error) {
+                            reject(error)
+                        }
 
-                if (this.status === PENDING) { // 异步 订阅
-                    // this.onFulfilled = onFulfilled
-                    // this.onRejected = onRejected
-                    this.onFulfilledCallBacks.push(() => {
-                        onFulfilled(this.value)
-                    })
-                    this.onRejectedCallBacks.push(() => {
-                        onRejected(this.reason)
-                    })
-                }
+                    }
+
+                    if (this.status === PENDING) { // 异步 订阅
+                        // this.onFulfilled = onFulfilled
+                        // this.onRejected = onRejected
+                        this.onFulfilledCallBacks.push(() => {
+                            try {
+                                onFulfilled(this.value)
+                            } catch (error) {
+                                reject(error)
+                            }
+                        })
+                        this.onRejectedCallBacks.push(() => {
+                            try {
+                                onRejected(this.reason)
+                            } catch (error) {
+                                reject(error)
+                            }
+                        })
+                    }
+
+                })
+                return p2
             }
         }
 
-        const p = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve('成功666')
-            }, 1000)
-        })
+
 
 
         // 原生promise
-        p.then(
-            (res) => console.log('第一次then', res) // res是666
-        )
-        p.then(
-            (res) => console.log('第二次then', res) // res是666
-        )
+        const p = new Promise((resolve, reject) => {
+            resolve('成功')
+        })
+        p.then((res) => { console.log(res, a.a); }, () => { }).then(() => { }, () => { }).then(() => { }, () => { })
 
 
         //------------------------------------------------------------------------------

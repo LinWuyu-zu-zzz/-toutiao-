@@ -4,7 +4,7 @@ import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
-// 持久化state  保存token  用一个插件
+// 持久化state，类似于本地存储  保存token。  createPersistedState
 // 下载 yarn add vuex-persistedstate@3.2.1
 // 引入,调用
 
@@ -17,18 +17,18 @@ export default new Vuex.Store({
     createPersistedState({
       // 调用函数,刷新页面重新初始化,token不会丢失
       key: 'HEIMA_TOUTIAO', // 默认值是vuex, 可以修改key
-      storage: window.sessionStorage, // 改为会话存储
-      reducer(state) {
+      // storage: window.sessionStorage, // 改为会话存储
+      reducer({ tokenObj, myChannels }) {
         // 只存储token,而不包括a:1这个数据
-        const { tokenObj } = state
+        // const { tokenObj, myChannels} = state
         // console.log(state) // 一个对象,包括a数据的对象和token数据的对象
-        return { tokenObj }
+        return { tokenObj, myChannels }
       }
     })
   ],
   state: {
     tokenObj: {},
-    a: 1
+    myChannels: []
   },
   getters: {
     isLogin(state) {
@@ -40,6 +40,9 @@ export default new Vuex.Store({
       // token这个参数就是 this.SET_TOKEN(data.data) 中的data.data
       state.tokenObj = token // 把用户传过来的token加到state的空对象中
       // console.log(token)
+    },
+    STE_My_CHANNELS(state, channels) {
+      state.myChannels = channels // 把传过来的删除或添加后最新channels数组信息存给state
     }
   }
 })

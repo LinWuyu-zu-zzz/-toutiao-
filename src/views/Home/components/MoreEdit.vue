@@ -43,6 +43,7 @@
           :key="item.id"
           :text="item.name"
           icon="plus"
+          @click="$emit('add-channel', item)"
         >
         </van-grid-item>
       </van-grid>
@@ -65,7 +66,7 @@ export default {
       // 推荐频道计算：所有频道-我的频道
       // const target = this.myChannels.find((item2) => { item2.id === item.id})
       // find方法，找到了就返回具体的元素，没找到就返回undefined
-      // 相当于去重，重合的为false,就过滤掉，保留没有的，就是推荐频道
+      // 相当于去重，有重合的为false,就过滤掉，保留没有重合的，就是推荐频道
       return this.allChannels.filter((allChannelsItem) => {
         return !this.myChannels.find(
           (myChannelsItem) => myChannelsItem.id === allChannelsItem.id
@@ -82,9 +83,9 @@ export default {
       // console.log(data)
       this.allChannels = data.data.channels
     },
-    handleMyChannels({ name }, index) {
+    handleMyChannels({ name, id }, index) {
       if (this.isEdit && name !== '推荐') {
-        console.log('删除频道', name)
+        this.$emit('del-channel', id)
       } else {
         // 1.关闭弹窗  2.切换频道
         this.$emit('change-active', index)
