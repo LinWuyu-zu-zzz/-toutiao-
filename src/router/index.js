@@ -5,7 +5,7 @@ Vue.use(VueRouter)
 
 // 单页面SPA: 缺点: 首屏加载速度很慢,使用路由懒加载(使用到了路由再去请求他)
 // 懒加载的chunk默认名字是模块的路径(在谷歌的network查看)
-// 写法:  /* webpackChunkName:新名字 */       性能优化!!
+// 魔法注释写法:  /* webpackChunkName:新名字 */       性能优化!!
 const routes = [
   {
     path: '/',
@@ -34,6 +34,10 @@ const routes = [
   {
     path: '/login',
     component: () => import('@/views/Login') // 懒加载
+  },
+  {
+    path: '/search',
+    component: () => import(/* webpackChunkName:"Search" */ '@/views/Search') // 魔法注释：network可以看到name是Search
   }
 ]
 

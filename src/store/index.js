@@ -11,24 +11,25 @@ Vue.use(Vuex)
 // plugins配置项:
 // - key: 默认值是vuex, 可以修改key
 // - storage: 默认是本地存储localStorage, 可以改为sessionStorage会话存储, cookie
-// - reducer: 是一个函数, return一个对象, 对象就作为sessionStorage存储的value
+// - reducer: 是一个函数, return一个对象, 对象就作为localStorage存储的value
 export default new Vuex.Store({
   plugins: [
     createPersistedState({
       // 调用函数,刷新页面重新初始化,token不会丢失
       key: 'HEIMA_TOUTIAO', // 默认值是vuex, 可以修改key
       // storage: window.sessionStorage, // 改为会话存储
-      reducer({ tokenObj, myChannels }) {
+      reducer({ tokenObj, myChannels, histories }) {
         // 只存储token,而不包括a:1这个数据
         // const { tokenObj, myChannels} = state
         // console.log(state) // 一个对象,包括a数据的对象和token数据的对象
-        return { tokenObj, myChannels }
+        return { tokenObj, myChannels, histories }
       }
     })
   ],
   state: {
     tokenObj: {},
-    myChannels: []
+    myChannels: [],
+    histories: [] // 别的地方直接用state里的数据（经过插件处理存到本地了）
   },
   getters: {
     isLogin(state) {
@@ -41,8 +42,17 @@ export default new Vuex.Store({
       state.tokenObj = token // 把用户传过来的token加到state的空对象中
       // console.log(token)
     },
+
     STE_My_CHANNELS(state, channels) {
       state.myChannels = channels // 把传过来的删除或添加后最新channels数组信息存给state
+    },
+
+    /**
+     * 搜索历史功能
+     * @param {*} histories 添加或或删除之后的新的每一项搜索历史,存给state
+     */
+    SET_HISTORIES(state, histories) {
+      state.histories = histories // 该参数是添加或或删除之后的新的每一项搜索历史数组,存给state
     }
   }
 })
